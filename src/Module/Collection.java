@@ -3,7 +3,15 @@ package Module;
 import java.util.ArrayList;
 
 public class Collection {
-    private final int collectionSize = 7;
-    private ArrayList<Card> cards = new ArrayList<>(7);
-    
+    private ArrayList<Card> cards = new ArrayList<>();
+
+    public void addCard(Card card) {
+
+    }
+
+    public ArrayList<Card> getCards() {
+        return cards;
+    }
+
+    public Card getByName;
 }
