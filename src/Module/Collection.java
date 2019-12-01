@@ -13,5 +13,7 @@ public class Collection {
         return cards;
     }
 
-    public Card getByName;
+    public Card getByName(String name) {
+
+    }
 }

@@ -41,4 +41,8 @@ class Playground {
     public void remove(int x, int y) {
 
     }
+
+    public void moveCards() {
+
+    }
 }

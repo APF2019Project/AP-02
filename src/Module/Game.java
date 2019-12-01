@@ -17,4 +17,8 @@ public class Game {
     public void setPlayground() {
         playground = new Playground(gameMode);
     }
+
+    public void endTurn() {
+
+    }
 }
