@@ -6,6 +6,15 @@ public class Card {
     private int price;
     private int damage;
 
+    public Card() {
+    }
+
+    public Card(String name, int hp, int damage) {
+        this.name = name;
+        this.hp = hp;
+        this.damage = damage;
+    }
+
     public String getName() {
         return name;
     }
@@ -20,5 +29,9 @@ public class Card {
 
     public int getDamage() {
         return damage;
+    }
+
+    public void setPrice(int price) {
+        this.price = price;
     }
 }

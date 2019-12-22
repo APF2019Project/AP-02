@@ -14,6 +14,11 @@ public class Collection {
     }
 
     public Card getByName(String name) {
-
+        for (Card card: cards) {
+            if(card.getName().equals(name)) {
+                return card;
+            }
+        }
+        return null;
     }
 }
