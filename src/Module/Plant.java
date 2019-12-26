@@ -29,7 +29,8 @@ public class Plant extends Card {
     public static void addPlant(Card plant) {
         plants.add(plant);
     }
-
+    public static ArrayList<Card> getPlant(){return plants;
+    }
     public static Card getByName(String name) {
         for (Card card : plants) {
             if (card.getName().equals(name)) {

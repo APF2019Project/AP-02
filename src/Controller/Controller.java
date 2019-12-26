@@ -75,7 +75,7 @@ public class Controller {
 
     private boolean firstCheck() {
         if (Request.getInstance().isInvalidCommand()) {
-            System.out.println("invalid Command");
+            Output.getInstance().invalidCommand();
             Request.getInstance().setInvalidCommand(false);
             return true;
         }
@@ -95,23 +95,32 @@ public class Controller {
     private void help() {
         switch (Request.getInstance().getCurrentMenu()) {
             case MAIN:
+                Output.getInstance().menuHelp();
                 break;
             case SIGN_UP:
+               Output.getInstance().signInHelp();
                 break;
             case LEADER_BOARD:
+                Output.getInstance().leaderBoardHelp();
                 break;
             case PROFILE:
+                Output.getInstance().profileHelp();
+
                 break;
             case SHOP:
+                Output.getInstance().shopHelp();
                 break;
             case PLAY:
+                Output.getInstance().playHelp();
                 break;
             case MAJOR_LOGIN:
+                Output.getInstance().majorLogin();
                 break;
             case LOGIN:
+              Output.getInstance().loginHelp();
                 break;
         }
-        System.out.println("help");
+
     }
 
 
@@ -133,11 +142,11 @@ public class Controller {
         Request.getInstance().nextMenu(Menu.PROFILE);
     }
 
-    private void play() { //todo don't touch this for now because battle is not ready yet!
+    private void play() {
         Request.getInstance().nextMenu(Menu.PLAY);
     }
 
-    private void shop() { //todo don't touch this it's mine
+    private void shop() {
         Request.getInstance().nextMenu(Menu.SHOP);
     }
 

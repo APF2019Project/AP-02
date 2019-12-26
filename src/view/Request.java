@@ -14,6 +14,7 @@ public class Request {
     private boolean invalidCommand = false;
     private MainMenuCommand lastMainMenuCommand;
     private LeaderBoardCommand lastLeaderBoardCommand;
+    private ShopCommand lastShopCommand;
     private boolean exit = false;
     private boolean help = false;
 
@@ -91,12 +92,26 @@ public class Request {
     public void majorLogin(String command) {
         if (command.equals("login")) {
             lastMajorLoginCommand = MajorLoginCommand.LOGIN;
-        } else if (command.equals("leaderboard")) {
+        } else if (command.equals("leader board")) {
             lastMajorLoginCommand = MajorLoginCommand.LEADER_BOARD;
         } else if (command.equals("create account")) {
             lastMajorLoginCommand = MajorLoginCommand.SIGN_UP;
         } else {
             invalidCommand = true;
+        }
+    }
+    public void Shop(String command){
+        if (command.matches("buy \\w+")){
+
+            ShopCommand shopCommand = ShopCommand.BUY;
+            shopCommand.setName(command.split(" ")[1]);
+            lastShopCommand =shopCommand;
+        }else if (command.equals("show shop")){
+            lastShopCommand= ShopCommand.SHOW_SHOP;
+        }else if( command.equals("show my cards")){
+            lastShopCommand= ShopCommand.SHOW_MY_CARDS;
+        }else if(command.equals("money")){
+            lastShopCommand = ShopCommand.MONEY;
         }
     }
 
@@ -166,5 +181,13 @@ public class Request {
 
     public void setLastLoginCommand(LoginCommand lastLoginCommand) {
         this.lastLoginCommand = lastLoginCommand;
+    }
+
+    public ShopCommand getLastShopCommand() {
+        return lastShopCommand;
+    }
+
+    public void setLastShopCommand(ShopCommand lastShopCommand) {
+        this.lastShopCommand = lastShopCommand;
     }
 }

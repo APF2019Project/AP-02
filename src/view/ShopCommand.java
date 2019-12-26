@@ -1,7 +1,7 @@
 package view;
 
 public enum ShopCommand {
-    MONEY, SHOW_SHOP , SHOW_BOUGHT_CARDS, BUY ;
+    MONEY, SHOW_SHOP , SHOW_MY_CARDS, BUY ;
     private String name ;
 
 

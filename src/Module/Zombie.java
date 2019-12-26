@@ -16,6 +16,7 @@ public class Zombie extends Card {
 
     public Zombie() {
     }
+    public static ArrayList<Card> getZombies(){return zombies;}
 
     public Zombie(String name, int hp, int damage, int speed, boolean environment, Type type) {
         super(name, hp, damage);

@@ -1,5 +1,7 @@
 package Module;
 
+import view.Output;
+
 import java.util.ArrayList;
 
 public class Account {
@@ -16,6 +18,7 @@ public class Account {
         this.password = password;
     }
 
+
     public static void addAccount(String username, String password) {
         Account account = new Account(username, password);
         accounts.add(account);
@@ -31,6 +34,23 @@ public class Account {
         }
         return null;
     }
+    public void readyShop(){
+        shop.addCardToShop(Plant.getPlant() , Zombie.getZombies(),collection.getCards());
+    }
+    public void showMyCards(){
+        for (int i = 0; i <collection.getCards().size() ; i++) {
+            Output.getInstance().printMyCards(collection.getCards().get(i).getName());
+        }
+    }
+    public void ShowShopCard(){
+        for (int i = 0; i <shop.getCards().size() ; i++) {
+           Output.getInstance().printShopCards( shop.getCards().get(i).getName(),shop.getCards().get(i).getPrice());
+        }
+    }
+    public void setCoins(int coins){
+        this.coins = coins;
+    }
+
 
     public int getCoins() {
         return coins;
