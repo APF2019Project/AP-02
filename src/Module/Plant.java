@@ -6,19 +6,14 @@ public class Plant extends Card {
     private static ArrayList<Card> plants = new ArrayList<>();
     private ArrayList<Bullet> bullets = new ArrayList<>();
 
-    private enum Type {
-        NORMAL, ICE, PROJECTILE, DOUBLE_SHOT, TRIPLE_LINE, CACTUS, GATLING_PEA, RANGE, STOP, SPLIT, LILY_PAD, BOMB,
-        EXPLDOE_NUT, DEFENCE, NEAR_HIT, MAGNET, MINE, SUNFLOWER, LINE_BOMB, ICE_PROJECTILE, TWIN_SUNFLOWER
-    }
-
     private int cooldown;
     private int cost;
-    private Type type;
+    private PlantType type;
 
     public Plant() {
     }
 
-    public Plant(String name, int hp, int damage, int cooldown, int cost, Type type) {
+    public Plant(String name, int hp, int damage, int cooldown, int cost, PlantType type) {
         super(name, hp, damage);
         this.cooldown = cooldown;
         this.cost = cost;
@@ -48,7 +43,7 @@ public class Plant extends Card {
         return cost;
     }
 
-    public Type getType() {
+    public PlantType getType() {
         return type;
     }
 }

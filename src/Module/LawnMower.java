@@ -1,4 +1,4 @@
 package Module;
 
-public class LawnMower {
+class LawnMower extends Card {
 }

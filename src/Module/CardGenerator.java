@@ -3,10 +3,9 @@ package Module;
 import org.codehaus.jackson.map.ObjectMapper;
 
 import java.io.File;
-import java.util.ArrayList;
 
 public class CardGenerator {
-    static String filePrefix = "src/Cards/";
+    private static String filePrefix = "src/Cards/";
     private static int plantsCount = 0;
     private static int zombieCount = 0;
 

@@ -1,45 +1,32 @@
 package Module;
 
-import java.util.ArrayList;
-import java.util.HashMap;
+public class Playground {
+    private Map map;
 
-class Playground {
     public Playground(Game.GameMode gameMode) {
-
-    }
-
-    private class Position {
-        private int x; // 0 to 18
-        private int y; // 0 to 5
-        private boolean material; //true for water, false for dirt
-
-        public Position(int x, int y, boolean material) {
-            this.x = x;
-            this.y = y;
-            this.material = material;
-        }
-
-        public int getX() {
-            return x;
-        }
-
-        public int getY() {
-            return y;
-        }
-
-        public boolean getMaterial() {
-            return material;
+        if (gameMode == Game.GameMode.DAY || gameMode == Game.GameMode.RAIL || gameMode == Game.GameMode.MULTIPLAYER) {
+            map = new Map("day", true);
+        } else if (gameMode == Game.GameMode.WATER) {
+            map = new Map("water", true);
+        } else {
+            map = new Map("day", false);
         }
     }
 
-    private HashMap<Position, ArrayList<Card>> map = new HashMap<>();
-
-    public void plant(int x, int y) {
-
+    public boolean plant(int x, int y, Card card) {
+        if (x % 2 != 0) {
+            System.out.println("you can't plant this here");
+            return false;
+        }
+        return map.addCard(x, y, card);
     }
 
     public void remove(int x, int y) {
+        map.removeCard(x, y);
+    }
 
+    public void printMap() {
+        map.print();
     }
 
     public void moveCards() {
