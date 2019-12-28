@@ -1,10 +1,6 @@
 package Controller;
 
-
 import view.*;
-
-import java.util.ArrayList;
-
 
 public class Controller {
     private final static Controller instance = new Controller();
@@ -98,7 +94,7 @@ public class Controller {
                 Output.getInstance().menuHelp();
                 break;
             case SIGN_UP:
-               Output.getInstance().signInHelp();
+                Output.getInstance().signInHelp();
                 break;
             case LEADER_BOARD:
                 Output.getInstance().leaderBoardHelp();
@@ -117,7 +113,7 @@ public class Controller {
                 Output.getInstance().majorLogin();
                 break;
             case LOGIN:
-              Output.getInstance().loginHelp();
+                Output.getInstance().loginHelp();
                 break;
         }
 
