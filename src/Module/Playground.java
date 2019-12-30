@@ -30,6 +30,11 @@ public class Playground {
     }
 
     public void moveCards() {
-
+        map.update();
+        map.update();
+        map.update();
+        map.reset();
     }
+
+
 }

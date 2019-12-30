@@ -19,6 +19,8 @@ public class Game {
     }
 
     public void endTurn() {
+    turn +=1 ;
+    playground.moveCards();
 
     }
 }

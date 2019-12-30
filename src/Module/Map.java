@@ -10,10 +10,12 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+
 public class Map {
     private HashMap<Cell, ArrayList<CellEntry>> map = new HashMap<>();
 
     private ArrayList<ArrayList<Cell>> cells;
+    private int updateTurn = 0;
 
     public Map(String type, boolean isLawnMowerExist) {
         String path = "src/Cards/Maps/" + type + ".json";
@@ -146,5 +148,26 @@ public class Map {
             }
             System.out.println();
         }
+    }
+
+    public void update() {
+        boolean isZobmbieInLine = false;
+        for (ArrayList<Cell> cellInRow : cells) {
+            for (Cell cell : cellInRow) {
+                ArrayList<Card> cards = CellEntry.getCards(map.get(cell));
+                if (cards.size() != 0) {
+                    for (Card card : cards) {
+                        if (card instanceof Zombie) {
+                            isZobmbieInLine = true;
+                        }
+                    }
+                }
+            }
+        }
+
+    }
+
+    public void reset() {
+        updateTurn = 0;
     }
 }
