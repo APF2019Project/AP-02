@@ -151,19 +151,30 @@ public class Map {
     }
 
     public void update() {
-        boolean isZobmbieInLine = false;
         for (ArrayList<Cell> cellInRow : cells) {
+            boolean isZobmbieInLine = false;
             for (Cell cell : cellInRow) {
                 ArrayList<Card> cards = CellEntry.getCards(map.get(cell));
                 if (cards.size() != 0) {
                     for (Card card : cards) {
                         if (card instanceof Zombie) {
                             isZobmbieInLine = true;
+                            break;
                         }
                     }
                 }
             }
+            if (isZobmbieInLine) {
+                for (Cell cell : cellInRow){
+                    ArrayList<Card> cards = CellEntry.getCards(map.get(cell));
+                    if (cards.size() != 0 ){
+
+                    }
+
+                }
+            }
         }
+
 
     }
 
