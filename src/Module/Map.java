@@ -165,14 +165,59 @@ public class Map {
                 }
             }
             if (isZobmbieInLine) {
-                for (Cell cell : cellInRow){
+                for (Cell cell : cellInRow) {
                     ArrayList<Card> cards = CellEntry.getCards(map.get(cell));
-                    if (cards.size() != 0 ){
+                    if (cards.size() != 0) {
+                        for (Card card : cards) {
+                            if (card instanceof Plant) {
+                                if (((Plant) card).getType() == PlantType.DOUBLE_SHOT) {
+
+
+                                }
+                                if (((Plant) card).getType() == PlantType.ICE) {
+
+
+                                }if (((Plant) card).getType() == PlantType.STOP) {
+
+
+                                }if (((Plant) card).getType() == PlantType.CACTUS) {
+
+
+                                }if (((Plant) card).getType() == PlantType.BOMB) {
+
+
+                                }if (((Plant) card).getType() == PlantType.GATLING_PEA) {
+
+
+                                }if (((Plant) card).getType() == PlantType.EXPLDOE_NUT) {
+
+
+                                }if (((Plant) card).getType() == PlantType.LINE_BOMB) {
+
+
+                                }if (((Plant) card).getType() == PlantType.MAGNET) {
+
+
+                                }if (((Plant) card).getType() == PlantType.MINE) {
+
+
+                                }
+
+
+                            }
+
+
+                        }
 
                     }
 
+
                 }
+
+
             }
+
+
         }
 
 
