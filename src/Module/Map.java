@@ -16,7 +16,7 @@ public class Map {
 
     private ArrayList<ArrayList<Cell>> cells;
     private int updateTurn = 0;
-
+    private int turn = 0 ;
     public Map(String type, boolean isLawnMowerExist) {
         String path = "src/Cards/Maps/" + type + ".json";
         ArrayList<ArrayList<Cell>> cells = initMap(path);
@@ -170,38 +170,83 @@ public class Map {
                     if (cards.size() != 0) {
                         for (Card card : cards) {
                             if (card instanceof Plant) {
+
                                 if (((Plant) card).getType() == PlantType.DOUBLE_SHOT) {
+
+                                    ((Plant) card).moveBullet();
+                                    ((Plant) card).shot(cell.getX(), cell.getY() , true);
+                                    ((Plant) card).shot(cell.getX(), cell.getY() , true ) ;
 
 
                                 }
                                 if (((Plant) card).getType() == PlantType.ICE) {
 
 
-                                }if (((Plant) card).getType() == PlantType.STOP) {
+                                    ((Plant) card).shot(cell.getX() , cell.getY() ,true);
 
-
-                                }if (((Plant) card).getType() == PlantType.CACTUS) {
-
-
-                                }if (((Plant) card).getType() == PlantType.BOMB) {
-
-
-                                }if (((Plant) card).getType() == PlantType.GATLING_PEA) {
-
-
-                                }if (((Plant) card).getType() == PlantType.EXPLDOE_NUT) {
-
-
-                                }if (((Plant) card).getType() == PlantType.LINE_BOMB) {
-
-
-                                }if (((Plant) card).getType() == PlantType.MAGNET) {
-
-
-                                }if (((Plant) card).getType() == PlantType.MINE) {
+                                }
+                                if (((Plant) card).getType() == PlantType.STOP) {
 
 
                                 }
+                                if (((Plant) card).getType() == PlantType.CACTUS) {
+
+
+                                }
+                                if (((Plant) card).getType() == PlantType.BOMB) {
+
+
+                                }
+                                if (((Plant) card).getType() == PlantType.GATLING_PEA) {
+
+
+                                }
+                                if (((Plant) card).getType() == PlantType.EXPLDOE_NUT) {
+
+
+                                }
+                                if (((Plant) card).getType() == PlantType.LINE_BOMB) {
+
+
+                                }
+                                if (((Plant) card).getType() == PlantType.MAGNET) {
+
+
+                                }
+                                if (((Plant) card).getType() == PlantType.MINE) {
+
+
+                                }
+                                if (((Plant) card).getType() == PlantType.ICE_PROJECTILE) {
+
+
+                                }
+                                if (((Plant) card).getType() == PlantType.NORMAL) {
+
+
+                                }
+                                if (((Plant) card).getType() == PlantType.PROJECTILE) {
+
+
+                                }
+                                if (((Plant) card).getType() == PlantType.TRIPLE_LINE) {
+
+
+                                }
+                                if (((Plant) card).getType() == PlantType.RANGE) {
+                                }
+
+                                if (((Plant) card).getType() == PlantType.SPLIT) {
+                                }
+
+                                if (((Plant) card).getType() == PlantType.DEFENCE) {
+                                }
+
+                                if (((Plant) card).getType() == PlantType.NEAR_HIT) {
+                                }
+
+
+                            } else {
 
 
                             }

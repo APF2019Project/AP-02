@@ -5,6 +5,7 @@ public class Effect {
     private EffectType effectType;
 
     private enum EffectType {
+
     }
 
     public Effect() {
