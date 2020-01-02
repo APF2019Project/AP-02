@@ -102,7 +102,6 @@ public class Request {
     }
     public void Shop(String command){
         if (command.matches("buy \\w+")){
-
             ShopCommand shopCommand = ShopCommand.BUY;
             shopCommand.setName(command.split(" ")[1]);
             lastShopCommand =shopCommand;

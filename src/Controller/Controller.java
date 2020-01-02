@@ -144,6 +144,7 @@ public class Controller {
 
     private void shop() {
         Request.getInstance().nextMenu(Menu.SHOP);
+
     }
 
 
