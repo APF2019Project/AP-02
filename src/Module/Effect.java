@@ -5,7 +5,7 @@ public class Effect {
     private EffectType effectType;
 
     private enum EffectType {
-
+    ICE,
     }
 
     public Effect() {

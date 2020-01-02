@@ -16,7 +16,8 @@ public class Map {
 
     private ArrayList<ArrayList<Cell>> cells;
     private int updateTurn = 0;
-    private int turn = 0 ;
+    private int turn = 0;
+
     public Map(String type, boolean isLawnMowerExist) {
         String path = "src/Cards/Maps/" + type + ".json";
         ArrayList<ArrayList<Cell>> cells = initMap(path);
@@ -152,98 +153,33 @@ public class Map {
 
     public void update() {
         for (ArrayList<Cell> cellInRow : cells) {
-            boolean isZobmbieInLine = false;
-            for (Cell cell : cellInRow) {
-                ArrayList<Card> cards = CellEntry.getCards(map.get(cell));
-                if (cards.size() != 0) {
-                    for (Card card : cards) {
-                        if (card instanceof Zombie) {
-                            isZobmbieInLine = true;
-                            break;
-                        }
-                    }
-                }
-            }
+            boolean isZobmbieInLine = isZobmbieInLine(cellInRow);
             if (isZobmbieInLine) {
                 for (Cell cell : cellInRow) {
                     ArrayList<Card> cards = CellEntry.getCards(map.get(cell));
                     if (cards.size() != 0) {
                         for (Card card : cards) {
                             if (card instanceof Plant) {
-
-                                if (((Plant) card).getType() == PlantType.DOUBLE_SHOT) {
-
-                                    ((Plant) card).moveBullet();
-                                    ((Plant) card).shot(cell.getX(), cell.getY() , true);
-                                    ((Plant) card).shot(cell.getX(), cell.getY() , true ) ;
-
-
-                                }
-                                if (((Plant) card).getType() == PlantType.ICE) {
-
-
-                                    ((Plant) card).shot(cell.getX() , cell.getY() ,true);
-
-                                }
-                                if (((Plant) card).getType() == PlantType.STOP) {
-
-
-                                }
-                                if (((Plant) card).getType() == PlantType.CACTUS) {
-
-
-                                }
-                                if (((Plant) card).getType() == PlantType.BOMB) {
-
-
-                                }
-                                if (((Plant) card).getType() == PlantType.GATLING_PEA) {
-
-
-                                }
-                                if (((Plant) card).getType() == PlantType.EXPLDOE_NUT) {
-
-
-                                }
-                                if (((Plant) card).getType() == PlantType.LINE_BOMB) {
-
-
-                                }
-                                if (((Plant) card).getType() == PlantType.MAGNET) {
-
-
-                                }
-                                if (((Plant) card).getType() == PlantType.MINE) {
-
-
-                                }
-                                if (((Plant) card).getType() == PlantType.ICE_PROJECTILE) {
-
-
-                                }
-                                if (((Plant) card).getType() == PlantType.NORMAL) {
-
-
-                                }
-                                if (((Plant) card).getType() == PlantType.PROJECTILE) {
-
-
-                                }
-                                if (((Plant) card).getType() == PlantType.TRIPLE_LINE) {
-
-
-                                }
-                                if (((Plant) card).getType() == PlantType.RANGE) {
-                                }
-
-                                if (((Plant) card).getType() == PlantType.SPLIT) {
-                                }
-
-                                if (((Plant) card).getType() == PlantType.DEFENCE) {
-                                }
-
-                                if (((Plant) card).getType() == PlantType.NEAR_HIT) {
-                                }
+                                /*baraye hamashon omadam ye shot tarif kardam ke ba
+                                 tajoh be modelesh ke badan tarif mikonim harekat mikone ya kheir
+                                */
+                                normal(cell, (Plant) card);
+                                iceShot(cell, (Plant) card);
+                                projectile(cell, (Plant) card);
+                                doubleShot(cell, (Plant) card);
+                                tripleLine(cell, (Plant) card);
+                                cactus(cell, (Plant) card);
+                                gatlingPea(cell, (Plant) card);
+                                stop(cell, (Plant) card);
+                                scaredyShroom(cell, (Plant) card);
+                                bomb(cell, (Plant) card);
+                                //in Explode-o-nut we don't have shot method
+                                lineBomb(cell, (Plant) card);
+                                magnet(cell,  (Plant) card);
+                                // baraye mine shot nadarim omadim miaim to check kardan harekat jambi ha check mikonim
+                                split(cell, (Plant) card);
+                                //defence shot nadare :)
+                                //nemidonam near hit che ghalati mikone \0/
 
 
                             } else {
@@ -268,7 +204,209 @@ public class Map {
 
     }
 
+    private void split(Cell cell, Plant card) {
+        if (card.getType() == PlantType.SPLIT) {
+            if (updateTurn == 0 && card.checkForShotTurn(turn)) {
+                card.shot(cell.getX(), cell.getY(), true);
+                card.shot(cell.getX(), cell.getY(), true);
+            }
+        }
+    }
+
+    private void magnet(Cell cell, Plant card) {
+        if (card.getType() == PlantType.MAGNET) {
+            // we don't move this shot if is valid
+            boolean isZobmbieInAround = isZobmbieInAround(cell);
+            if (isZobmbieInAround) {
+                if (updateTurn == 0 && card.checkForShotTurn(turn)) {
+                    card.shot(cell.getX(), cell.getY(), false);
+                }
+            }
+        }
+    }
+
+    private boolean isZobmbieInAround(Cell cell) {
+        boolean isZobmbieInAround = false;
+        int x = cell.getX() - 1;
+        int y = cell.getY() - 1;
+        overLoop:
+        for (x = cell.getX() - 1; x <= cell.getX() + 1; x++) {
+            for (y = cell.getY() - 1; x <= cell.getY() + 1; x++) {
+                try {
+                    Cell cellnew = cells.get(y).get(x);
+                    ArrayList<Card> cardss = CellEntry.getCards(map.get(cells.get(y).get(x)));
+                    if (cardss.size() != 0) {
+                        for (Card card1 : cardss) {
+                            if (card1 instanceof Zombie) {
+                                isZobmbieInAround = true;
+                                break overLoop;
+                            }
+                        }
+                    }
+                } catch (Exception ignore) {
+                    continue;
+                }
+            }
+        }
+        return isZobmbieInAround;
+    }
+
+    private void lineBomb(Cell cell, Plant card) {
+        if (card.getType() == PlantType.LINE_BOMB) {
+            if (updateTurn == 0 && card.checkForShotTurn(turn)) {
+                card.shot(cell.getX(), cell.getY(), true);
+            }
+        }
+    }
+
+
+    private void bomb(Cell cell, Plant card) {
+        if (card.getType() == PlantType.BOMB) {
+            if (updateTurn == 0 && card.checkForShotTurn(turn)) {
+                card.shot(cell.getX(), cell.getY(), false);
+            }
+        }
+    }
+
+    private void scaredyShroom(Cell cell, Plant card) {
+        if (card.getType() == PlantType.SCAREDY_SHROOM) {
+            boolean isZobieInLineUntilTheNextTwoCell = isZobmbieInLineUntilTheNextTwoCell(cell);
+            if (!isZobieInLineUntilTheNextTwoCell) {
+                if (updateTurn == 0 && card.checkForShotTurn(turn)) {
+                    card.shot(cell.getX(), cell.getY(), true);
+                }
+            }
+
+        }
+    }
+
+    private boolean isZobmbieInLine(ArrayList<Cell> cellInRow) {
+        boolean isZobmbieInLine = false;
+        for (Cell cell : cellInRow) {
+            ArrayList<Card> cards = CellEntry.getCards(map.get(cell));
+            if (cards.size() != 0) {
+                for (Card card : cards) {
+                    if (card instanceof Zombie) {
+                        isZobmbieInLine = true;
+                        break;
+                    }
+                }
+            }
+        }
+        return isZobmbieInLine;
+    }
+
+    private boolean isZobmbieInLineUntilTheNextTwoCell(Cell cell) {
+        boolean isZobmbieInLineUntilTheNextTwoCall = false;
+        if (cell.getX() < 18) {
+            ArrayList<Card> cards = CellEntry.getCards(map.get(cells.get(cell.getY()).get(cell.getX() + 1)));
+            if (cards.size() != 0) {
+                for (Card card : cards) {
+                    if (card instanceof Zombie) {
+                        isZobmbieInLineUntilTheNextTwoCall = true;
+                        return isZobmbieInLineUntilTheNextTwoCall;
+                    }
+                }
+            }
+            cards = CellEntry.getCards(map.get(cells.get(cell.getY()).get(cell.getX() + 2)));
+            if (cards.size() != 0) {
+                for (Card card : cards) {
+                    if (card instanceof Zombie) {
+                        isZobmbieInLineUntilTheNextTwoCall = true;
+                        return isZobmbieInLineUntilTheNextTwoCall;
+                    }
+                }
+            }
+        }
+        return isZobmbieInLineUntilTheNextTwoCall;
+    }
+
+    //this method for shooting
+
+    private void stop(Cell cell, Plant card) {
+        if (card.getType() == PlantType.STOP) {
+            if (updateTurn == 0 && card.checkForShotTurn(turn)) {
+                card.shot(cell.getX(), cell.getY(), true);
+            }
+
+        }
+    }
+
+    private void gatlingPea(Cell cell, Plant card) {
+        if (card.getType() == PlantType.GATLING_PEA) {
+            if (updateTurn == 0 && card.checkForShotTurn(turn)) {
+                card.shot(cell.getX(), cell.getY(), true);
+            }
+        }
+    }
+
+    private void cactus(Cell cell, Plant card) {
+        if (card.getType() == PlantType.CACTUS) {
+            if (updateTurn == 0 && card.checkForShotTurn(turn)) {
+                card.shot(cell.getX(), cell.getY(), true);
+            }
+        }
+    }
+
+    private void tripleLine(Cell cell, Plant card) {
+        if (card.getType() == PlantType.TRIPLE_LINE) {
+            if (updateTurn == 0 && card.checkForShotTurn(turn)) {
+                card.shot(cell.getX(), cell.getY(), true);
+                if (cell.getY() != 5)
+                    card.shot(cell.getX(), cell.getY() + 1, true);
+                if (cell.getY() != 0)
+                    card.shot(cell.getX(), cell.getY() + 1, true);
+            }
+        }
+    }
+
+    private void projectile(Cell cell, Plant card) {
+        if (card.getType() == PlantType.PROJECTILE) {
+            if (updateTurn == 0 && card.checkForShotTurn(turn)) {
+                card.shot(cell.getX(), cell.getY(), false);
+            }
+
+        }
+    }
+
+    private void normal(Cell cell, Plant card) {
+        if (card.getType() == PlantType.NORMAL) {
+            if (updateTurn == 0 && card.checkForShotTurn(turn)) {
+                card.shot(cell.getX(), cell.getY(), true);
+            }
+
+        }
+    }
+
+    private void iceShot(Cell cell, Plant card) {
+        if (card.getType() == PlantType.ICE) {
+            card.moveBullet();
+            if (updateTurn == 0 && card.checkForShotTurn(turn)) {
+                card.shot(cell.getX(), cell.getY(), true);
+            }
+        }
+    }
+
+    private void doubleShot(Cell cell, Plant card) {
+        if (card.getType() == PlantType.DOUBLE_SHOT) {
+            if (updateTurn == 0 && card.checkForShotTurn(turn)) {
+                card.shot(cell.getX(), cell.getY(), true);
+            }
+        }
+    }
+
     public void reset() {
         updateTurn = 0;
     }
 }
+/*
+
+                                    if (updateTurn == 0 && ((Plant)card).checkForShotTurn(turn)) {
+                                            ((Plant)card).shot(cell.getX(), cell.getY(), true);
+                                            }
+                                            */
+/*
+
+                                if (((Plant) card).getType() == PlantType.RANGE) {
+                                        }
+                                        */

@@ -10,6 +10,7 @@ public class Plant extends Card {
     private int cost;
     private PlantType type;
     private int turn;
+    private int turnOfLastShot = 0;
 
     public Plant() {
     }
@@ -23,6 +24,11 @@ public class Plant extends Card {
         this.turn = turn;
     }
     // add turn for bullet we need
+
+
+    public int getTurnOfLastShot() {
+        return turnOfLastShot;
+    }
 
     public static void addPlant(Card plant) {
         plants.add(plant);
@@ -53,6 +59,10 @@ public class Plant extends Card {
         return type;
     }
 
+    public ArrayList<Bullet> getBullets() {
+        return bullets;
+    }
+
     public void moveBullet() {
         for (Bullet bullet : bullets) {
             try {
@@ -65,14 +75,47 @@ public class Plant extends Card {
         }
     }
 
-    public void shot(int x, int y , boolean isPeaShot) {
-        bullets.add(new Bullet(x, y, this.getDamage(), 3 , isPeaShot));
+    public void moveBackBullet() {
+        for (Bullet bullet : bullets) {
+            try {
+                if (bullet.getX() > 0) {
+                    bullet.setX(bullet.getX() - 1);
+                }
+            } catch (Exception ignore) {
+                bullets.remove(bullet);
+            }
+        }
+    }
+
+    public void shot(int x, int y, boolean isPeaShot) {
+        bullets.add(new Bullet(x, y, this.getDamage(), 3, isPeaShot));
     }
 
     public boolean checkForShotTurn(int turnGame) {
-        if (turnGame % turn == 0) {
+        if ((turnGame - this.turnOfLastShot) >= turn) {
+            turnOfLastShot = turnGame;
             return true;
-        } else
-            return false;
+        }
+        if (this.type == PlantType.DOUBLE_SHOT) {
+            if ((turnGame - this.turnOfLastShot) == 1) {
+                return true;
+            }
+
+        }
+        if (this.type == PlantType.GATLING_PEA) {
+            if ((turnGame - this.turnOfLastShot) == 1) {
+                return true;
+            }
+            if ((turnGame - this.turnOfLastShot) == 2) {
+                return true;
+            }
+            if ((turnGame - this.turnOfLastShot) == 3) {
+                return true;
+            }
+            if ((turnGame - this.turnOfLastShot) == 4) {
+                return true;
+            }
+        }
+        return false;
     }
 }

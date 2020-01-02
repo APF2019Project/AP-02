@@ -7,6 +7,7 @@ public class CellEntry {
     private Effect effect = null;
 
     public CellEntry() {
+
     }
 
     public CellEntry(Card card) {
